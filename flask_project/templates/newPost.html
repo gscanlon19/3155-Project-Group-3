@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="3155 Project">
+    <title>3155 Project</title>
+    <link type="text/css" rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- {% if post %} -->
+        <form action="edit" method="post">
+    <!-- {% else %} -->
+        <form action="new" method="post">
+    <!-- {% endif %} -->
+            <h1> New Post </h1>
+        <p>
+                <textarea name="postContent"  rows="6" cols="0">
+                        Add your post or question here ...
+                </textarea><br><br>
+                <input type="text" id="url" placeholder="Add image link here ... "></input>
+        </p>
+        <p>
+            <!-- {% if post %} -->
+            <!-- <input type="submit" value="Update Post"/> -->
+            <!-- {% else %} -->
+            <input type="submit" value="Add Post"/>
+            <!-- {% endif %} -->
+        </p>
+    </form>
+</body>
+</html>
