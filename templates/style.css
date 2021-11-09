@@ -1,0 +1,25 @@
+form {
+    text-align: center;
+    border: 3px solid #f1f1f1;
+    margin:auto;
+    padding: 10pt 10pt;
+    color: royalblue;
+}
+
+body {
+    display:flex;
+}
+
+button {
+    background-color: royalblue;
+    color: white;
+    padding: 5px 15px;
+    margin: auto;
+    display: flex;
+    font-size: large;
+}
+
+input {
+    text-align: center;
+    font-size: large;
+}
