@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="3155 Project">
         <title>3155 Project</title>
-        <link type="text/css" rel="stylesheet" href="static/style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
         <form action="login" method="login">
@@ -14,7 +14,7 @@
             <input type="text" id="Uname" placeholder="Username" name="Uname" required><br><br>
             <input type="password" id="Pword" placeholder="Password" name="psw" required><br><br>
             <button type="submit">Login</button><br>
-            <nav> <a href="/registration">Sign Up</a> </nav>
+            <nav> <a href="{{ url_for('registration') }}">Sign Up</a> </nav>
         </form>
     </body>
 </html>

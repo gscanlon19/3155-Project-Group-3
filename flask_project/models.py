@@ -1,4 +1,4 @@
-From database import db
+from database import db
 
 class Post(db.Model):
 	id = db.Column("id", db.Integer, primary_key = True)

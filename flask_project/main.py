@@ -3,6 +3,7 @@ import os                 # os is used to get environment variables IP & PORT
 from flask import Flask
 from flask import render_template # Flask is the web app that we will cust
 from flask import redirect, url_for
+from flask import request
 from database import db
 from models import Post as Post
 
@@ -29,10 +30,47 @@ def registration():
 #Posts
 @app.route('/posts')
 def get_posts():
-
     my_posts = db.session.query(Post).all()
 
-    return render_template('posts.htm', posts=my_posts)
+    return render_template('posts.html', posts=my_posts)
+
+#new posts
+@app.route('/newPost', methods=['GET', 'POST'])
+def new_post():
+    if request.method == 'POST':
+        text = request.form['noteText']
+        new_record = Post(text)
+        db.session.add(new_record)
+        db.session.commit()
+
+        return redirect(url_for('get_posts'))
+    else:
+        render_template('newPost.html')
+
+#edit Post
+@app.route('/posts/edit/<post_id>', methods=['GET', 'POST'])
+def update_note(post_id):
+    if request.method == 'POST':
+        text = request.form['postText']
+        post = db.session.query(Post).filter_by(id=post_id).one()
+
+        post.text = text
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('get_posts'))
+    else:
+        my_post = db.session.query(Post).filter_by(id=post_id).one()
+        return render_template('newPost.html', post=my_post)
+
+#delete Post
+@app.route('/notes/delete/<post_id>', methods=['POST'])
+def delete_post(post_id):
+    my_post = db.session.query(Post).filter_by(id=post_id).one()
+    db.session.delete(my_post)
+    db.session.commit()
+
+    return redirect(url_for('get_posts'))
+
 
 
 
