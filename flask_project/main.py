@@ -37,6 +37,13 @@ def get_posts():
 
     return render_template('posts.html', posts=my_posts)
 
+#Post
+@app.route('/posts/<post_id>')
+def get_post(post_id):
+
+    my_post = db.session.query(Post).filter_by(id=post_id).one()
+
+    return render_template('post.html', post=my_post)
 #new posts
 @app.route('/posts/new', methods=['GET', 'POST'])
 def new_post():

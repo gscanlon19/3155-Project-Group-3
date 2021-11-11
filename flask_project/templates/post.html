@@ -4,10 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="3155 Project">
-    <title>3155 Project</title>
-    <link type="text/css" rel="stylesheet" href="style.css">
+    <title>Posty - View your Post</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<nav>
+    <a href="{{ url_for('get_posts') }}">Home</a> ||
+    <a href="{{ url_for('new_post') }}">Add Post</a>
+</nav>
+
+<h1> Post details </h1>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Text</th>
+        <th>Date</th>
+    </tr>
+    <tr>
+        <td>{{ post.title }}</td>
+        <td>{{ post.text }}</td>
+        <td>{{ post.date }}</td>
+    </tr>
+</table>
 
 </body>
 </html>
