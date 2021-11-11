@@ -8,7 +8,7 @@ from database import db
 from models import Post as Post
 
 app = Flask(__name__)  #create an app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flask_project_app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flask_project.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 #  Bind SQLAlchemy db object to this Flask app
 db.init_app(app)
@@ -20,40 +20,50 @@ with app.app_context():
 @app.route('/')
 @app.route('/login')
 def login():
+
     return render_template('login.html')
 
 #registration
 @app.route('/registration')
 def registration():
+
     return render_template('registration.html')
 
 #Posts
 @app.route('/posts')
 def get_posts():
+
     my_posts = db.session.query(Post).all()
 
     return render_template('posts.html', posts=my_posts)
 
 #new posts
-@app.route('/newPost', methods=['GET', 'POST'])
+@app.route('/posts/new', methods=['GET', 'POST'])
 def new_post():
+
     if request.method == 'POST':
-        text = request.form['noteText']
-        new_record = Post(text)
+        title = request.form['title']
+        text = request.form['postText']
+        from datetime import date
+        today = date.today()
+        today = today.strftime("%m-%d-%Y")
+        new_record = Post(title, text, today)
         db.session.add(new_record)
         db.session.commit()
 
         return redirect(url_for('get_posts'))
     else:
-        render_template('newPost.html')
+        return render_template('newPost.html')
 
 #edit Post
 @app.route('/posts/edit/<post_id>', methods=['GET', 'POST'])
-def update_note(post_id):
+def update_post(post_id):
     if request.method == 'POST':
+        title = request.form['title']
         text = request.form['postText']
         post = db.session.query(Post).filter_by(id=post_id).one()
 
+        post.title = title
         post.text = text
         db.session.add(post)
         db.session.commit()
@@ -63,15 +73,12 @@ def update_note(post_id):
         return render_template('newPost.html', post=my_post)
 
 #delete Post
-@app.route('/notes/delete/<post_id>', methods=['POST'])
+@app.route('/posts/delete/<post_id>', methods=['POST'])
 def delete_post(post_id):
     my_post = db.session.query(Post).filter_by(id=post_id).one()
     db.session.delete(my_post)
     db.session.commit()
 
     return redirect(url_for('get_posts'))
-
-
-
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)),debug=True)
