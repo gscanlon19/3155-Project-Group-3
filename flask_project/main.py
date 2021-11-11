@@ -8,7 +8,7 @@ from database import db
 from models import Post as Post
 
 app = Flask(__name__)  #create an app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flask_project.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flask_project_app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
 #  Bind SQLAlchemy db object to this Flask app
 db.init_app(app)

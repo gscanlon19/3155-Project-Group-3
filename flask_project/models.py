@@ -6,7 +6,7 @@ class Post(db.Model):
     text = db.Column("text", db.String(100))
     date = db.Column("date", db.String(50))
 
-    def __init__(self, title, text):
+    def __init__(self, title, text, date):
         self.title = title
         self.text = text
         self.date = date
