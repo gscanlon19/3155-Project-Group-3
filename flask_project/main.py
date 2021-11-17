@@ -22,8 +22,15 @@ with app.app_context():
     db.create_all()  # run under the app context
 
 
-# login
 @app.route('/')
+@app.route('/index')
+def index():
+    if session.get('user'):
+        return render_template("index.html", user=session['user'])
+
+    return render_template("index.html")
+
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     login_form = LoginForm()
@@ -47,10 +54,10 @@ def login():
         # form did not validate or GET request
         return render_template("login.html", form=login_form)
 
+
 # Posts
 @app.route('/posts')
 def get_posts():
-
     if session.get('user'):
 
         my_posts = db.session.query(Post).filter_by(user_id=session['user_id']).all()
@@ -73,47 +80,56 @@ def get_post(post_id):
 # new posts
 @app.route('/posts/new', methods=['GET', 'POST'])
 def new_post():
-    if request.method == 'POST':
-        title = request.form['title']
-        text = request.form['postText']
-        from datetime import date
-        today = date.today()
-        today = today.strftime("%m-%d-%Y")
-        new_record = Post(title, text, today)
-        db.session.add(new_record)
-        db.session.commit()
+    if session.get('user'):
+        if request.method == 'POST':
+            title = request.form['title']
+            text = request.form['postText']
+            from datetime import date
+            today = date.today()
+            today = today.strftime("%m-%d-%Y")
+            new_record = Post(title, text, today, session['user_id'])
+            db.session.add(new_record)
+            db.session.commit()
 
-        return redirect(url_for('get_posts'))
+            return redirect(url_for('get_posts'))
+        else:
+            return render_template('newPost.html', user=session['user'])
     else:
-        return render_template('newPost.html')
+        return redirect(url_for('login'))
 
 
 # edit Post
 @app.route('/posts/edit/<post_id>', methods=['GET', 'POST'])
 def update_post(post_id):
-    if request.method == 'POST':
-        title = request.form['title']
-        text = request.form['postText']
-        post = db.session.query(Post).filter_by(id=post_id).one()
+    if session.get('user'):
+        if request.method == 'POST':
+            title = request.form['title']
+            text = request.form['postText']
+            post = db.session.query(Post).filter_by(id=post_id).one()
 
-        post.title = title
-        post.text = text
-        db.session.add(post)
-        db.session.commit()
-        return redirect(url_for('get_posts'))
+            post.title = title
+            post.text = text
+            db.session.add(post)
+            db.session.commit()
+            return redirect(url_for('get_posts'))
+        else:
+            my_post = db.session.query(Post).filter_by(id=post_id).one()
+            return render_template('newPost.html', post=my_post, user=session['user'])
     else:
-        my_post = db.session.query(Post).filter_by(id=post_id).one()
-        return render_template('newPost.html', post=my_post)
+        return redirect(url_for('login'))
 
 
 # delete Post
 @app.route('/posts/delete/<post_id>', methods=['POST'])
 def delete_post(post_id):
-    my_post = db.session.query(Post).filter_by(id=post_id).one()
-    db.session.delete(my_post)
-    db.session.commit()
+    if session.get('user'):
+        my_post = db.session.query(Post).filter_by(id=post_id).one()
+        db.session.delete(my_post)
+        db.session.commit()
 
-    return redirect(url_for('get_posts'))
+        return redirect(url_for('get_posts'))
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['POST', 'GET'])

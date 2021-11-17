@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Posty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+  </head>
+  <body>
+  <div class="navdiv">
+    {% if user %}
+      <nav>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </nav>
+    {% else %}
+      <nav>
+        <a href="{{ url_for('login') }}">Sign In</a> ||
+        <a href="{{ url_for('register') }}">Register</a>
+      </nav>
+    {% endif %}
+  </div>
+
+    <h1>Welcome {{user}} to Posty!</h1>
+
+    <h2>Where students can connect and learn!</h2>
+
+    <nav> <a href="/posts"> My posts </a> </nav>
+
+
+  </body>
+</html>
