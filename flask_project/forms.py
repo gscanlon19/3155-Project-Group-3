@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, textAreaField
 from wtforms.validators import Length, DataRequired, EqualTo, Email
 from wtforms import ValidationError
 from models import User
@@ -50,3 +50,12 @@ class LoginForm(FlaskForm):
     def validate_email(self, field):
         if db.session.query(User).filter_by(email=field.data).count() == 0:
             raise ValidationError('Incorrect username or password.')
+
+
+class CommentForm(FlaskForm):
+    class Meta:
+        csrf = False
+
+    comment = TextAreaField('Comment',validators=[Length(min=1)])
+
+    submit = SubmitField('Add Comment')
