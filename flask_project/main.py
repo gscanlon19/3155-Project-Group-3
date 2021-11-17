@@ -74,7 +74,6 @@ def get_posts():
 # Post
 @app.route('/posts/<post_id>')
 def get_post(post_id):
-
     if session.get('user'):
         my_post = db.session.query(Post).filter_by(id=post_id, user_id=session['user_id']).one()
 
@@ -83,6 +82,7 @@ def get_post(post_id):
         return render_template('post.html', post=my_post, user=session['user'], form=form)
     else:
         return redirect(url_for('login'))
+
 
 # new posts
 @app.route('/posts/new', methods=['GET', 'POST'])
@@ -175,7 +175,7 @@ def logout():
 
 
 @app.route('/posts/<post_id>/comment', methods=['POST'])
-def new_comment(note_id):
+def new_comment(post_id):
     if session.get('user'):
         comment_form = CommentForm()
         # validate_on_submit only validates using POST
