@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="3155 Project">
+        <title>3155 Project</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <form action="login" method="login">
+            <h1>POSTY</h1>
+            <h2>Where students can connect and learn!</h2>
+            <input type="text" id="Uname" placeholder="Username" name="Uname" required><br><br>
+            <input type="password" id="Pword" placeholder="Password" name="psw" required><br><br>
+            <td><a href="{{ url_for('get_posts') }}">Log In</a> </td>
+            <nav> <a href="{{ url_for('registration') }}">Sign Up</a> </nav>
+        </form>
+    </body>
+</html>
