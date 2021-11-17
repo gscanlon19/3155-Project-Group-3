@@ -27,8 +27,12 @@ with app.app_context():
 @app.route('/')
 @app.route('/index')
 def index():
+
     if session.get('user'):
-        return render_template("index.html", user=session['user'])
+
+        all_posts = db.session.query(Post)
+
+        return render_template("index.html", user=session['user'], posts=all_posts)
 
     return render_template("index.html")
 
@@ -94,7 +98,7 @@ def new_post():
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, today, session['user_id'])
+            new_record = Post(title, text, today, session['user_id'], first_name=session.get('user.first_name'))
             db.session.add(new_record)
             db.session.commit()
 

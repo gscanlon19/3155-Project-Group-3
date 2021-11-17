@@ -8,16 +8,17 @@
   </head>
   <body>
   <div class="navdiv">
-    {% if user %}
-      <nav>
-        <a href="{{ url_for('logout') }}">Logout</a>
-      </nav>
-    {% else %}
-      <nav>
-        <a href="{{ url_for('login') }}">Sign In</a> ||
-        <a href="{{ url_for('register') }}">Register</a>
-      </nav>
-    {% endif %}
+      {% if user %}
+        <nav>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+      {% else %}
+        <nav>
+            <a href="{{ url_for('login') }}">Sign In</a> ||
+            <a href="{{ url_for('register') }}">Register</a>
+        </nav>
+        <h2>Log in to view recent posts!</h2>
+      {% endif %}
   </div>
 
     <h1>Welcome {{user}} to Posty!</h1>
@@ -26,6 +27,27 @@
 
     <nav> <a href="/posts"> My posts </a> </nav>
 
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Title</th>
+            <th>Date</th>
+            <!-- SORT BUTTON ADDED NOT YET FUNCTIONAL -->
+            <th colspan="3"><form action="#" method="#">
+                <input type="submit" value="Sort by Name">
+            </form></th>
+        </tr>
+        {% for post in posts %}
+        <tr>
 
+            <td>{{ post.first_name }}</td>
+            <td>{{ post.title }}</td>
+            <td>{{ post.date }}</td>
+            <!-- ADDED A 'VIEW POST' LINK TO CLICK INSTEAD OF CLICKING ON THE TITLE OF THE POST -->
+            <td><a href="{{ url_for('get_post', post_id=post.id) }}">View Post</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
   </body>
 </html>
