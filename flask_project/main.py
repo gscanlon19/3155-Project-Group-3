@@ -44,7 +44,7 @@ def login():
             session['user'] = the_user.first_name
             session['user_id'] = the_user.id
             # render view
-            return redirect(url_for('get_notes'))
+            return redirect(url_for('get_posts'))
 
         # password check failed
         # set error message to alert user
@@ -156,6 +156,15 @@ def register():
 
     # something went wrong - display register view
     return render_template('register.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    # check if a user is saved in session
+    if session.get('user'):
+        session.clear()
+
+    return redirect(url_for('index'))
 
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)

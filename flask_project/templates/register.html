@@ -8,12 +8,16 @@
 </head>
     <body>
         <div class="navdiv">
-
-            <nav>
-                <a href="{{ url_for('get_posts') }}">Home</a> ||
-                <a href="{{ url_for('new_post') }}">Add Post</a>
-            </nav>
-
+            {% if user %}
+                <nav>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                </nav>
+            {% else %}
+                <nav>
+                    <a href="{{ url_for('login') }}">Sign In</a> ||
+                    <a href="{{ url_for('register') }}">Register</a>
+                </nav>
+            {% endif %}
         </div>
 
         <h1> Welcome to Posty!</h1>

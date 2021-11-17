@@ -10,8 +10,10 @@
 <body>
 
 <nav>
-    <a href="{{ url_for('get_posts') }}">Home</a> ||
-    <a href="{{ url_for('new_post') }}">Add Post</a>
+    <a href="{{ url_for('index') }}"> Home</a> ||
+    <a href="{{ url_for('get_posts') }}"> My Posts</a> ||
+    <a href="{{ url_for('new_post') }}">Add Post</a> ||
+    <a href="{{ url_for('logout') }}">Logout</a>
 </nav>
 
 <h1>Add your new post!</h1><br>
