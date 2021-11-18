@@ -33,9 +33,15 @@
             <th>Title</th>
             <th>Date</th>
             <!-- SORT BUTTON ADDED NOT YET FUNCTIONAL -->
-            <th colspan="3"><form action="#" method="#">
-                <input type="submit" value="Sort by Name">
-            </form></th>
+            <th><form action="{{ url_for('filters') }}" method = "POST">
+                <select name="sort" id="sort">
+                    <option value="first_name">First Name</option>
+                    <option value="title">Title</option>
+                    <option value="date">Date</option>
+                </select>
+                <button type="submit">Apply filter</button>
+            </form>
+            </th>
         </tr>
         {% for post in posts %}
         <tr>

@@ -27,12 +27,40 @@ with app.app_context():
 @app.route('/')
 @app.route('/index')
 def index():
-
     if session.get('user'):
 
         all_posts = db.session.query(Post)
 
         return render_template("index.html", user=session['user'], posts=all_posts)
+
+    return render_template("index.html")
+
+
+@app.route('/filters', methods=['POST', 'GET'])
+def filters():
+    if session.get('user'):
+
+        if request.method == 'POST':
+
+            sort = request.form.get("sort")
+
+            if sort == "first_name":
+
+                all_posts = db.session.query(Post).order_by('first_name')
+
+            elif sort == "title":
+
+                all_posts = db.session.query(Post).order_by('title')
+
+            elif sort == "date":
+
+                all_posts = db.session.query(Post).order_by('date')
+
+            else:
+
+                all_posts = db.session.query(Post).order_by('first_name')
+
+            return render_template("index.html", user=session['user'], posts=all_posts)
 
     return render_template("index.html")
 
@@ -79,11 +107,12 @@ def get_posts():
 @app.route('/posts/<post_id>')
 def get_post(post_id):
     if session.get('user'):
-        my_post = db.session.query(Post).filter_by(id=post_id, user_id=session['user_id']).one()
+
+        my_post = db.session.query(Post).filter_by(id=post_id).one()
 
         form = CommentForm()
 
-        return render_template('post.html', post=my_post, user=session['user'], form=form)
+        return render_template('post.html', post=my_post, form=form)
     else:
         return redirect(url_for('login'))
 
@@ -95,16 +124,20 @@ def new_post():
         if request.method == 'POST':
             title = request.form['title']
             text = request.form['postText']
+            first_name = session['user']
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, today, session['user_id'], first_name=session.get('user.first_name'))
+            new_record = Post(title, text, today, session['user_id'], first_name)
             db.session.add(new_record)
             db.session.commit()
 
             return redirect(url_for('get_posts'))
+
+
         else:
             return render_template('newPost.html', user=session['user'])
+
     else:
         return redirect(url_for('login'))
 
