@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import Length, DataRequired, EqualTo, Email
+from wtforms.validators import Length, DataRequired, EqualTo, Email, Regexp
 from wtforms import ValidationError
 from models import User
 from database import db
@@ -24,7 +24,10 @@ class RegisterForm(FlaskForm):
     ])
 
     confirmPassword = PasswordField('Confirm Password', validators=[
-        Length(min=6, max=10)
+        Regexp(
+            regex=r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$",
+            message="Password must contain a 6-10 characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+        )
     ])
 
     submit = SubmitField('Submit')
