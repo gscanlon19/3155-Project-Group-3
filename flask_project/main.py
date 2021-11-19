@@ -124,11 +124,12 @@ def new_post():
         if request.method == 'POST':
             title = request.form['title']
             text = request.form['postText']
+            image = request.form['image']
             first_name = session['user']
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, today, session['user_id'], first_name)
+            new_record = Post(title, text, image, today, session['user_id'], first_name)
             db.session.add(new_record)
             db.session.commit()
 
@@ -153,6 +154,7 @@ def update_post(post_id):
 
             post.title = title
             post.text = text
+            post.image = image
             db.session.add(post)
             db.session.commit()
             return redirect(url_for('get_posts'))
