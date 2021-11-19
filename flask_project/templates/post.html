@@ -35,14 +35,11 @@
         <td>ADD LIKE COUNTER VARIABLE HERE</td>
         <td>ADD DISLIKE COUNTER VARIABLE HERE</td>
     </tr>
+    {% if post.image %}
     <tr>
-        <!-- ADDED SPOT FOR IMAGE LINK TO BE DISPLAYED HERE -->
-        <!-- THE TEXT SHOULD BE REPLACED WITH THE NEW VARIABLE FOR THE STORED IMG LINK -->
-        <!-- ADD URL TO THE LINKS.HTML PAGE IN THE HREF ATTRIBUTE -->
-        <td colspan="100%"><a href="#">Add a variable here so that the image link shows up, <br>
-            this should redirect you to the links.html page when it is clicked so that you
-            can view the full size image</a></td>
+        <td colspan="100%"><a href="{{post.image}}">CLICK HERE TO VIEW IMAGE</a></td>
     </tr>
+    {% endif %}
 </table>
 <!-- ADDED LIKE BUTTON, DISLIKE BUTTON, AND REPLY BUTTON NOT YET FUNCTIONAL -->
 <table>
@@ -52,9 +49,6 @@
         </form></th>
         <th><form action="#" method="#">
             <input type="submit" value="Dislike">
-        </form></th>
-        <th><form action="#" method="#">
-            <input type="submit" value="Reply">
         </form></th>
     </tr>
 </table>
