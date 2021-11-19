@@ -33,16 +33,10 @@
                     {% endif %}
                 </textarea>
                 </p>
-            <!--<input type="text" id="url" placeholder="Add image link here ... ">-->
-                <p>
-                    {% if post %}
-                        <input type="submit" value="Update Post">
-                    {% else %}
-                        <input type="submit" value="Add Post">
-                    {% endif %}
-                </p>
+
                  <!-- IMAGE LINK TEXTBOX HERE NOT YET FUNCTIONAL -->
-                <p><input type="url" id="url" placeholder="Add image link here ... "/></p>
+                <p><label>Add Image URL Here:</label></p>
+                <p><input type="text" name="image" value="{% if post %}{{post.image}} {% endif %}"/></p>
                 <p>
                     {% if post %}
                         <input type="submit" value="Update Post">
