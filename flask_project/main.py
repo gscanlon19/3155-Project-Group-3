@@ -150,6 +150,7 @@ def update_post(post_id):
         if request.method == 'POST':
             title = request.form['title']
             text = request.form['postText']
+            image = request.form['image']
             post = db.session.query(Post).filter_by(id=post_id).one()
 
             post.title = title
