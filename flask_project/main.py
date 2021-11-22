@@ -28,7 +28,6 @@ with app.app_context():
 @app.route('/index')
 def index():
     if session.get('user'):
-
         all_posts = db.session.query(Post)
 
         return render_template("index.html", user=session['user'], posts=all_posts)
@@ -126,10 +125,12 @@ def new_post():
             text = request.form['postText']
             image = request.form['image']
             first_name = session['user']
+            likes = 0
+            dislikes = 0
             from datetime import date
             today = date.today()
             today = today.strftime("%m-%d-%Y")
-            new_record = Post(title, text, image, today, session['user_id'], first_name)
+            new_record = Post(title, text, image, today, session['user_id'], first_name, likes, dislikes)
             db.session.add(new_record)
             db.session.commit()
 
@@ -224,6 +225,48 @@ def new_comment(post_id):
             new_record = Comment(comment_text, int(post_id), session['user_id'])
             db.session.add(new_record)
             db.session.commit()
+
+        return redirect(url_for('get_post', post_id=post_id))
+
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/posts/<post_id>/likes', methods=['POST'])
+def likeCounter(post_id):
+    if session.get('user'):
+
+        post = db.session.query(Post).filter_by(id=post_id).one()
+
+        likes = post.likes
+
+        likes = likes + 1
+
+        post.likes = likes
+
+        db.session.add(post)
+        db.session.commit()
+
+        return redirect(url_for('get_post', post_id=post_id))
+
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/posts/<post_id>/dislikes', methods=['POST'])
+def dislikeCounter(post_id):
+    if session.get('user'):
+
+        post = db.session.query(Post).filter_by(id=post_id).one()
+
+        dislikes = post.dislikes
+
+        dislikes = dislikes + 1
+
+        post.dislikes = dislikes
+
+        db.session.add(post)
+        db.session.commit()
 
         return redirect(url_for('get_post', post_id=post_id))
 

@@ -24,30 +24,30 @@
         <th>Text</th>
         <th>Date</th>
         <!-- ADDED HEADERS FOR LIKES/DISLIKES -->
-        <th>Liked</th>
-        <th>Disliked</th>
+        <th>Likes</th>
+        <th>Dislikes</th>
     </tr>
     <tr>
         <td>{{ post.title }}</td>
         <td>{{ post.text }}</td>
         <td>{{ post.date }}</td>
         <!-- ADD VARIABLE BELOW THAT CAN ACCESS A LIKE/DISLIKE DATABASE -->
-        <td>ADD LIKE COUNTER VARIABLE HERE</td>
-        <td>ADD DISLIKE COUNTER VARIABLE HERE</td>
+        <td> {{ post.likes }}</td>
+        <td> {{ post.dislikes }}</td>
     </tr>
     {% if post.image %}
     <tr>
-        <td colspan="100%"><a href="{{post.image}}">CLICK HERE TO VIEW IMAGE</a></td>
+        <td colspan="100%"><a href="{{ post.image }}">Click here to view image</a></td>
     </tr>
     {% endif %}
 </table>
 <!-- ADDED LIKE BUTTON, DISLIKE BUTTON, AND REPLY BUTTON NOT YET FUNCTIONAL -->
 <table>
     <tr>
-        <th><form action="#" method="#">
+        <th><form action="{{ url_for('likeCounter', post_id=post.id) }}" method="post">
             <input type="submit" value="Like">
         </form></th>
-        <th><form action="#" method="#">
+        <th><form action="{{ url_for('dislikeCounter', post_id=post.id) }}" method="post">
             <input type="submit" value="Dislike">
         </form></th>
     </tr>
