@@ -35,9 +35,9 @@
             <!-- SORT BUTTON ADDED NOT YET FUNCTIONAL -->
             <th><form action="{{ url_for('filters') }}" method = "POST">
                 <select name="sort" id="sort">
-                    <option value="first_name">First Name</option>
-                    <option value="title">Title</option>
                     <option value="date">Date</option>
+                    <option value="title">Title</option>
+                    <option value="first_name">First Name</option>
                 </select>
                 <button type="submit">Apply filter</button>
             </form>
