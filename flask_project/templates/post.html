@@ -31,7 +31,6 @@
         <td>{{ post.title }}</td>
         <td>{{ post.text }}</td>
         <td>{{ post.date }}</td>
-        <!-- ADD VARIABLE BELOW THAT CAN ACCESS A LIKE/DISLIKE DATABASE -->
         <td> {{ post.likes }}</td>
         <td> {{ post.dislikes }}</td>
     </tr>
@@ -41,7 +40,7 @@
     </tr>
     {% endif %}
 </table>
-<!-- ADDED LIKE BUTTON, DISLIKE BUTTON, AND REPLY BUTTON NOT YET FUNCTIONAL -->
+<!-- ADDED LIKE BUTTON, DISLIKE BUTTON, AND REPLY BUTTON  -->
 <table>
     <tr>
         <th><form action="{{ url_for('likeCounter', post_id=post.id) }}" method="post">
